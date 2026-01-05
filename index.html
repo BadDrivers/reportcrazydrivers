@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ReportCrazyDrivers.com</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+}
+
+.header {
+  background: #c62828;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.form-box {
+  background: white;
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.1);
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 15px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 20px;
+  background: #c62828;
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #a71d1d;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>ReportCrazyDrivers.com</h1>
+  <p>Public Driver Incident Reporting</p>
+</div>
+
+<div class="form-box">
+<form>
+
+<label>State</label>
+<select name="state" required>
+<option value="">Select State</option>
+<option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
+<option>CA</option><option>CO</option><option>CT</option><option>DE</option>
+<option>DC</option><option>FL</option><option>GA</option><option>GU</option>
+<option>HI</option><option>ID</option><option>IL</option><option>IN</option>
+<option>IA</option><option>KS</option><option>KY</option><option>LA</option>
+<option>ME</option><option>MD</option><option>MA</option><option>MI</option>
+<option>MN</option><option>MS</option><option>MO</option><option>MT</option>
+<option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+<option>NM</option><option>NY</option><option>NC</option><option>ND</option>
+<option>OH</option><option>OK</option><option>OR</option><option>PA</option>
+<option>PR</option><option>RI</option><option>SC</option><option>SD</option>
+<option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+<option>VI</option><option>VA</option><option>WA</option><option>WV</option>
+<option>WI</option><option>WY</option>
+</select>
+
+<label>Plate Number</label>
+<input type="text" name="plateno" maxlength="12" required>
+
+<label>Place</label>
+<input type="text" name="place" maxlength="25">
+
+<label>Type</label>
+<select name="type" required>
+<option value="">Select Type</option>
+<option>Weaver</option>
+<option>RanStop</option>
+<option>Speed +20</option>
+<option>Speed +10</option>
+<option>CZ</option>
+</select>
+
+<label>Data 1</label>
+<input type="text" name="data1" maxlength="25">
+
+<label>Data 2</label>
+<input type="text" name="data2" maxlength="25">
+
+<button type="submit">Submit Report</button>
+
+</form>
+</div>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabase = supabase.createClient(
+  'https://abcd1234efgh.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+);
+
+const form = document.querySelector('form');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  const { error } = await supabase
+    .from('reports')
+    .insert([{
+      state: formData.get('state'),
+      plateno: formData.get('plateno'),
+      place: formData.get('place'),
+      type: formData.get('type'),
+      data1: formData.get('data1'),
+      data2: formData.get('data2')
+    }]);
+
+  if (error) {
+    alert('Submission failed');
+    console.error(error);
+  } else {
+    alert('Report submitted successfully');
+    form.reset();
+  }
+});
+</script>
+
+</body>
+</html>
