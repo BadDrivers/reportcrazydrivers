@@ -118,10 +118,12 @@ button:hover {
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const supabase = supabase.createClient(
-  'https://abcd1234efgh.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+const { createClient } = supabase;
+const supabaseClient = createClient(
+  'https://xxxx.supabase.co',
+  'PUBLIC_ANON_KEY'
 );
+
 
 const form = document.querySelector('form');
 
@@ -130,7 +132,7 @@ form.addEventListener('submit', async (e) => {
 
   const formData = new FormData(form);
 
-  const { error } = await supabase
+  const { data, error } = await supabaseclient
     .from('reports')
     .insert([{
       state: formData.get('state'),
@@ -153,3 +155,5 @@ form.addEventListener('submit', async (e) => {
 
 </body>
 </html>
+
+
