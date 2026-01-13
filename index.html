@@ -134,8 +134,8 @@ button:hover {
     const plateNo = document.getElementById("plateNo").value;
     const place = document.getElementById("place").value;
     const type = document.getElementById("type").value;
-    const data1 = document.getElementById("data1").value;
-    const data2 = document.getElementById("data2").value;
+   // const data1 = document.getElementById("data1").value;
+   // const data2 = document.getElementById("data2").value;
 
     const { error } = await supabaseClient
       .from('reports')
@@ -144,8 +144,8 @@ button:hover {
         plateno: plateNo,
         place: place,
         type: type,
-        data1: data1,
-        data2: data2
+    // data1: data1,
+    // data2: data2
       }]);
 
     if (error) {
@@ -160,6 +160,7 @@ button:hover {
 
 </body>
 </html>
+
 
 
 
